@@ -19,6 +19,10 @@ gem "rack-cors", :require => 'rack/cors'
 
 gem 'figaro'
 
+gem "pgcrypto"
+
+gem 'pry-rails'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -38,7 +42,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'pry-rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
