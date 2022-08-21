@@ -1,0 +1,2 @@
+class PublicRoom < Room
+end

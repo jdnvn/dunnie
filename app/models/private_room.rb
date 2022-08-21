@@ -1,0 +1,2 @@
+class PrivateRoom < Room
+end

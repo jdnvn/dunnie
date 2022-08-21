@@ -24,6 +24,7 @@ gem "pgcrypto"
 gem 'pry-rails'
 
 gem 'ably'
+gem 'geocoder', '~> 1.6.1'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
