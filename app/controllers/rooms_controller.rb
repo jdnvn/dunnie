@@ -9,6 +9,9 @@ class RoomsController < ApplicationController
     expires_at = params['room']['expires_at']
 
     room = current_user.rooms.create!(name: name, expires_at: expires_at)
+    ably_client = Ably::Rest.new(key: ENV['ABLY_SERVER_KEY'])
+    channel = ably_client.channel('rooms')
+    channel.publish('new room', room.as_json);
 
     if room
       render json: { status: :ok, room: room }

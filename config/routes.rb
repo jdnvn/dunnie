@@ -9,5 +9,7 @@ Rails.application.routes.draw do
     resources :rooms do
       post :enter
     end
+
+    get 'ably/auth'
   end
 end
