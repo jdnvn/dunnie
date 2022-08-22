@@ -1,6 +1,6 @@
 class RoomsController < ApplicationController
   def index
-    non_expired_rooms = current_user.rooms.where('rooms.expires_at > ?', Time.current)
+    non_expired_rooms = Room.where('rooms.expires_at > ?', Time.current)
     render json: { status: :ok, rooms: non_expired_rooms }
   end
 
@@ -11,13 +11,18 @@ class RoomsController < ApplicationController
     longitude = params.dig(:room, :coordinates, :longitude)
     type = params.dig(:room, :type)
 
-    room = current_user.rooms.create!(
+    room = Room.create!(
       name: name,
       type: type,
       expires_at: expires_at,
       latitude: latitude,
       longitude: longitude
     )
+
+    if current_user
+      current_user.rooms << room
+      current_user.save!
+    end
 
     return render json: { status: :unprocessable_entity } unless room
 
