@@ -6,7 +6,7 @@ class RoomsController < ApplicationController
 
   def create
     name = params.dig(:room, :name) || SecureRandom.hex(10)
-    expires_at = params.dig(:room, :expires_at)
+    expires_at = params.dig(:room, :expires_at) || Time.current + 1.day
     latitude = params.dig(:room, :coordinates, :latitude)
     longitude = params.dig(:room, :coordinates, :longitude)
     type = params.dig(:room, :type)
@@ -29,9 +29,9 @@ class RoomsController < ApplicationController
   end
 
   def show
-    room = current_user.rooms.find_by(id: params['id'])
+    room = Room.find_by(id: params['id'])
 
-    render json: { status: :not_found } unless room && room.expires_at > Time.current
+    return render json: { status: :not_found } unless room && room.expires_at > Time.current
 
     render json: { status: :ok, room: room }
   end
