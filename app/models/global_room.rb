@@ -1,0 +1,2 @@
+class GlobalRoom < Room
+end

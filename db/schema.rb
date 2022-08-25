@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_21_205346) do
+ActiveRecord::Schema.define(version: 2022_08_23_180619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2022_08_21_205346) do
     t.string "type"
     t.float "latitude"
     t.float "longitude"
+    t.float "radius"
   end
 
   create_table "rooms_users", id: false, force: :cascade do |t|

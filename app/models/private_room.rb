@@ -1,2 +1,0 @@
-class PrivateRoom < Room
-end

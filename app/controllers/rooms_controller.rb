@@ -4,19 +4,22 @@ class RoomsController < ApplicationController
     render json: { status: :ok, rooms: non_expired_rooms }
   end
 
+  # refactor this
   def create
     name = params.dig(:room, :name) || SecureRandom.hex(10)
     expires_at = params.dig(:room, :expires_at) || Time.current + 1.day
     latitude = params.dig(:room, :coordinates, :latitude)
     longitude = params.dig(:room, :coordinates, :longitude)
     type = params.dig(:room, :type)
+    radius = params.dig(:room, :radius)
 
     room = Room.create!(
       name: name,
       type: type,
       expires_at: expires_at,
       latitude: latitude,
-      longitude: longitude
+      longitude: longitude,
+      radius: radius
     )
 
     if current_user
@@ -28,7 +31,7 @@ class RoomsController < ApplicationController
 
     ably_client = Ably::Rest.new(key: ENV['ABLY_SERVER_KEY'])
     channel = ably_client.channel('rooms')
-    channel.publish("room #{room.id}", room.as_json);
+    channel.publish("room #{room.id}", room.as_json.merge(roomType: type));
 
     render json: { status: :ok, room: room }
   end
