@@ -30,7 +30,7 @@ class RoomsController < ApplicationController
     return render json: { status: :unprocessable_entity } unless room
 
     ably_client = Ably::Rest.new(key: ENV['ABLY_SERVER_KEY'])
-    channel = ably_client.channel('rooms')
+    channel = ably_client.channel(type)
     channel.publish("room #{room.id}", room.as_json.merge(roomType: type));
 
     render json: { status: :ok, room: room }
